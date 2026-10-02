@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đơn hàng - ShopVN</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container-fluid">
+      <div class="navbar-brand" onclick="location.href='index.html'" style="cursor:pointer;">
+        <i class="fas fa-shopping-bag"></i>
+        <span>ShopVN</span>
+      </div>
+      <div class="navbar-actions">
+        <a class="nav-btn" href="favorites.html"><i class="fas fa-heart"></i><span id="favBadge">0</span></a>
+        <a class="nav-btn" href="cart.html"><i class="fas fa-shopping-cart"></i><span id="cartBadge">0</span></a>
+        <div class="user-section">
+          <button id="userBtn" class="nav-btn user-btn"><i class="fas fa-user-circle"></i></button>
+          <div id="userDropdown" class="user-dropdown"><!-- Updated by app.js --></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="page-header">
+      <a class="btn-back" href="index.html"><i class="fas fa-arrow-left"></i></a>
+      <h1>📦 Đơn Hàng Của Tôi</h1>
+    </div>
+
+    <div class="orders-filters">
+      <button class="filter-btn active" data-status="all">Tất cả</button>
+      <button class="filter-btn" data-status="pending">Chờ xác nhận</button>
+      <button class="filter-btn" data-status="processing">Đang xử lý</button>
+      <button class="filter-btn" data-status="shipped">Đang giao</button>
+      <button class="filter-btn" data-status="completed">Hoàn thành</button>
+      <button class="filter-btn" data-status="cancelled">Hủy bỏ</button>
+    </div>
+
+    <div id="ordersList" class="orders-list"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

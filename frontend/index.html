@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopVN - Mua Sắm Online Giá Tốt</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Modern Navigation -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-brand">
+                <i class="fas fa-shopping-bag"></i>
+                <span>ShopVN</span>
+            </div>
+            
+            <div class="navbar-search">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="navbar-actions">
+                <button id="notifBtn" class="nav-btn notif-btn" onclick="showNotifications()" title="Thông báo">
+                    <i class="fas fa-bell"></i>
+                    <span id="notifBadge" style="display: none;">0</span>
+                </button>
+                <button id="cartBtn" class="nav-btn cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartBadge">0</span>
+                </button>
+                <button id="favBtn" class="nav-btn fav-btn">
+                    <i class="fas fa-heart"></i>
+                    <span id="favBadge">0</span>
+                </button>
+                <div class="user-section">
+                    <button id="userBtn" class="nav-btn user-btn">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <!-- Dropdown sẽ được cập nhật bởi app.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Home -->
+    <div id="homePage" class="page active">
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <div class="slider">
+                <div class="slide active">
+                    <div class="slide-content">
+                        <h1>🎉 Mua Sắm Thêm, Tiết Kiệm Thêm</h1>
+                        <p>Khám phá hàng ngàn sản phẩm chất lượng</p>
+                        <button class="btn-primary">Khám Phá Ngay</button>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="slide-content">
+                        <h1>⚡ Flash Sale Hôm Nay</h1>
+                        <p>Giảm đến 70% cho sản phẩm hot</p>
+                        <button class="btn-primary">Xem Flash Sale</button>
+                    </div>
+                </div>
+            </div>
+            <button class="slider-btn prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-btn next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <!-- Quick Categories -->
+        <section class="quick-cats">
+            <div class="container-fluid">
+                <h2 class="section-title">🏪 Danh Mục Nổi Bật</h2>
+                <div class="cats-grid">
+                    <div class="cat-card" data-cat="fashion">
+                        <div class="cat-icon"><i class="fas fa-tshirt"></i></div>
+                        <span>Thời trang</span>
+                    </div>
+                    <div class="cat-card" data-cat="electronics">
+                        <div class="cat-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <span>Điện tử</span>
+                    </div>
+                    <div class="cat-card" data-cat="beauty">
+                        <div class="cat-icon"><i class="fas fa-spa"></i></div>
+                        <span>Làm đẹp</span>
+                    </div>
+                    <div class="cat-card" data-cat="home">
+                        <div class="cat-icon"><i class="fas fa-home"></i></div>
+                        <span>Nhà cửa</span>
+                    </div>
+                    <div class="cat-card" data-cat="sports">
+                        <div class="cat-icon"><i class="fas fa-dumbbell"></i></div>
+                        <span>Thể thao</span>
+                    </div>
+                    <div class="cat-card" data-cat="books">
+                        <div class="cat-icon"><i class="fas fa-book"></i></div>
+                        <span>Sách</span>
+                    </div>
+                    <div class="cat-card" data-cat="food">
+                        <div class="cat-icon"><i class="fas fa-pizza-slice"></i></div>
+                        <span>Đồ ăn</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flash Sale Section -->
+        <section class="flash-sale-section">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h2><i class="fas fa-bolt"></i> ⚡ Flash Sale</h2>
+                    <div class="flash-timer">
+                        <span>Kết thúc trong:</span>
+                        <div class="timer">
+                            <span id="hours">02</span>:
+                            <span id="minutes">45</span>:
+                            <span id="seconds">30</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="flashSaleGrid" class="products-grid flash-grid"></div>
+            </div>
+        </section>
+
+        <!-- Main Products Section -->
+        <section class="products-section">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h2>🛍️ Sản Phẩm Gợi Ý</h2>
+                    
+                    <!-- Filter & Sort Controls -->
+                    <div class="controls">
+                        <div class="filter-sort">
+                            <label>Sắp xếp:</label>
+                            <select id="sortSelect">
+                                <option value="default">Gợi ý</option>
+                                <option value="price_asc">Giá: Thấp → Cao</option>
+                                <option value="price_desc">Giá: Cao → Thấp</option>
+                                <option value="rating">⭐ Đánh giá cao</option>
+                                <option value="sold">🔥 Bán chạy</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-price">
+                            <input type="number" name="priceMin" placeholder="Từ">
+                            <span>-</span>
+                            <input type="number" name="priceMax" placeholder="Đến">
+                            <button class="btn-filter">Lọc</button>
+                        </div>
+                        
+                        <div class="filter-cats">
+                            <button class="cat-filter active" data-cat="all">Tất cả</button>
+                            <button class="cat-filter" data-cat="fashion">Thời trang</button>
+                            <button class="cat-filter" data-cat="electronics">Điện tử</button>
+                            <button class="cat-filter" data-cat="beauty">Làm đẹp</button>
+                            <button class="cat-filter" data-cat="home">Nhà cửa</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="productsGrid" class="products-grid"></div>
+                
+                <!-- Pagination -->
+                <div id="pagination" class="pagination" style="display: none; justify-content: center; align-items: center; gap: 8px; margin: 32px 0;">
+                    <button id="prevPage" class="btn-page" style="padding: 8px 16px; border: 1px solid #ddd; background: white; border-radius: 4px; cursor: pointer;">
+                        <i class="fas fa-chevron-left"></i> Trước
+                    </button>
+                    <div id="pageInfo" style="padding: 0 16px; color: var(--text);"></div>
+                    <button id="nextPage" class="btn-page" style="padding: 8px 16px; border: 1px solid #ddd; background: white; border-radius: 4px; cursor: pointer;">
+                        Sau <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Recently Viewed Section -->
+        <section class="recently-viewed-section" style="padding: 40px 0; background: #f5f5f5;">
+            <div class="container-fluid">
+                <h2 class="section-title">👁️ Đã Xem Gần Đây</h2>
+                <div id="recentlyViewedGrid" class="products-grid" style="grid-template-columns: repeat(6, 1fr);"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Các trang Cart/Orders/Favorites đã tách thành file riêng -->
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content product-detail">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <div id="productDetailContent"></div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content auth-modal" style="max-width: 500px;">
+            <button class="modal-close" onclick="document.getElementById('checkoutModal').classList.remove('active')">×</button>
+            <h2>📦 Thông Tin Giao Hàng</h2>
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label>Họ tên người nhận *</label>
+                    <input type="text" id="recipientName" required>
+                </div>
+                <div class="form-group">
+                    <label>Số điện thoại *</label>
+                    <input type="tel" id="recipientPhone" required>
+                </div>
+                <div class="form-group">
+                    <label>Địa chỉ giao hàng *</label>
+                    <textarea id="recipientAddress" rows="3" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Ghi chú đơn hàng</label>
+                    <textarea id="orderNote" rows="2" placeholder="Ví dụ: Giao giờ hành chính..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit;"></textarea>
+                </div>
+                <div style="background: #f9f9f9; padding: 16px; border-radius: 4px; margin: 16px 0;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Tạm tính:</span>
+                        <span id="checkoutSubtotal">₫0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Phí vận chuyển:</span>
+                        <span>₫29.000</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; color: var(--primary); padding-top: 8px; border-top: 1px solid #ddd;">
+                        <span>Tổng cộng:</span>
+                        <span id="checkoutTotal">₫0</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary btn-block">Xác Nhận Đặt Hàng</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Auth modal removed - now using auth.html -->
+
+    <!-- Notifications Modal -->
+    <div id="notificationsModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="modal-close" onclick="document.getElementById('notificationsModal').classList.remove('active')">×</button>
+            <h2 style="margin-bottom: 16px;"><i class="fas fa-bell"></i> Thông Báo</h2>
+            <div class="notifications-list" style="max-height: 500px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="drawer">
+        <div class="drawer-header">
+            <h3>🛒 Giỏ Hàng</h3>
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="cartDrawerContent" class="drawer-content"></div>
+        <div class="drawer-footer">
+            <a href="cart.html" class="btn-primary btn-block">Xem Chi Tiết</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: #fff; border-top: 4px solid var(--primary); margin-top: 40px;">
+        <div class="container-fluid" style="padding: 40px 0;">
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-bottom: 32px;">
+                <!-- Column 1 -->
+                <div>
+                    <h3 style="margin-bottom: 16px; color: var(--text-dark);">Chăm Sóc Khách Hàng</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;">Trung Tâm Trợ Giúp</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;">Hướng Dẫn Mua Hàng</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;">Chính Sách Đổi Trả</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;">Thanh Toán</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;">Vận Chuyển</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 style="margin-bottom: 16px; color: var(--text-dark);">Về ShopVN</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;">Giới Thiệu</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;">Tuyển Dụng</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;">Chính Sách Bảo Mật</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;">Điều Khoản Dịch Vụ</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;">Liên Hệ</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 style="margin-bottom: 16px; color: var(--text-dark);">Thanh Toán</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <img src="https://via.placeholder.com/60x30/ffffff/999999?text=Visa" style="border: 1px solid #ddd; border-radius: 4px;">
+                        <img src="https://via.placeholder.com/60x30/ffffff/999999?text=MC" style="border: 1px solid #ddd; border-radius: 4px;">
+                        <img src="https://via.placeholder.com/60x30/ffffff/999999?text=JCB" style="border: 1px solid #ddd; border-radius: 4px;">
+                        <img src="https://via.placeholder.com/60x30/ffffff/999999?text=COD" style="border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    <h3 style="margin: 16px 0; color: var(--text-dark);">Vận Chuyển</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <img src="https://via.placeholder.com/60x30/ffffff/999999?text=Fast" style="border: 1px solid #ddd; border-radius: 4px;">
+                        <img src="https://via.placeholder.com/60x30/ffffff/999999?text=SPX" style="border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h3 style="margin-bottom: 16px; color: var(--text-dark);">Theo Dõi Chúng Tôi</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;"><i class="fab fa-youtube"></i> YouTube</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: var(--text-light); text-decoration: none;"><i class="fab fa-tiktok"></i> TikTok</a></li>
+                    </ul>
+                    <h3 style="margin: 16px 0; color: var(--text-dark);">Tải Ứng Dụng</h3>
+                    <div style="display: flex; gap: 8px;">
+                        <img src="https://via.placeholder.com/120x40/000000/ffffff?text=App+Store" style="border-radius: 4px; cursor: pointer;">
+                        <img src="https://via.placeholder.com/120x40/34A853/ffffff?text=Play+Store" style="border-radius: 4px; cursor: pointer;">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom bar -->
+            <div style="border-top: 1px solid #eee; padding-top: 24px; text-align: center; color: var(--text-light);">
+                <p style="margin: 0;">© 2026 ShopVN. Tất cả quyền được bảo lưu.</p>
+                <p style="margin: 8px 0 0 0; font-size: 13px;">Địa chỉ: 123 Đường ABC, Quận 1, TP. Hồ Chí Minh | Hotline: 1900 xxxx</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

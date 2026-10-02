@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giỏ hàng - ShopVN</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container-fluid">
+      <div class="navbar-brand" onclick="location.href='index.html'" style="cursor:pointer;">
+        <i class="fas fa-shopping-bag"></i>
+        <span>ShopVN</span>
+      </div>
+      <div class="navbar-actions">
+        <a class="nav-btn" href="favorites.html"><i class="fas fa-heart"></i><span id="favBadge">0</span></a>
+        <a class="nav-btn" href="orders.html"><i class="fas fa-box"></i></a>
+        <div class="user-section">
+          <button id="userBtn" class="nav-btn user-btn"><i class="fas fa-user-circle"></i></button>
+          <div id="userDropdown" class="user-dropdown"><!-- Updated by app.js --></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="page-header">
+      <a class="btn-back" href="index.html"><i class="fas fa-arrow-left"></i></a>
+      <h1>🛒 Giỏ Hàng Của Bạn</h1>
+    </div>
+
+    <div class="cart-container">
+      <div class="cart-items-section" id="cartItemsSection">
+        <div id="cartItemsList"></div>
+      </div>
+
+      <div class="cart-summary">
+        <div class="summary-card">
+          <h3>Tóm Tắt Đơn Hàng</h3>
+          <div class="summary-row">
+            <span>Tạm tính:</span>
+            <span id="subtotal">₫0</span>
+          </div>
+          <div class="voucher-input">
+            <input type="text" id="voucherCode" placeholder="Nhập mã voucher">
+            <button id="applyVoucherBtn">Áp dụng</button>
+          </div>
+          <div class="summary-row discount" id="discountRow" style="display:none;">
+            <span>Giảm giá:</span>
+            <span id="discount" style="color:#f44336;">-₫0</span>
+          </div>
+          <hr>
+          <div class="summary-row total">
+            <span>Tổng cộng:</span>
+            <span id="cartTotal">₫0</span>
+          </div>
+          <button id="checkoutBtn" class="btn-primary btn-block"><i class="fas fa-credit-card"></i> Thanh Toán</button>
+          <a href="index.html" class="btn-secondary btn-block">Tiếp Tục Mua Sắm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    // Bind checkout
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('checkoutBtn');
+      if (btn) btn.addEventListener('click', handleCheckout);
+    });
+  </script>
+</body>
+</html>

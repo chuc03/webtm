@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yêu thích - ShopVN</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container-fluid">
+      <div class="navbar-brand" onclick="location.href='index.html'" style="cursor:pointer;">
+        <i class="fas fa-shopping-bag"></i>
+        <span>ShopVN</span>
+      </div>
+      <div class="navbar-actions">
+        <a class="nav-btn" href="cart.html"><i class="fas fa-shopping-cart"></i><span id="cartBadge">0</span></a>
+        <a class="nav-btn" href="orders.html"><i class="fas fa-box"></i></a>
+        <div class="user-section">
+          <button id="userBtn" class="nav-btn user-btn"><i class="fas fa-user-circle"></i></button>
+          <div id="userDropdown" class="user-dropdown"><!-- Updated by app.js --></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="page-header">
+      <a class="btn-back" href="index.html"><i class="fas fa-arrow-left"></i></a>
+      <h1>❤️ Sản Phẩm Yêu Thích</h1>
+    </div>
+
+    <div id="favoritesList" class="products-grid"></div>
+  </div>
+
+  <!-- Product Detail Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content product-detail">
+      <button class="modal-close"><i class="fas fa-times"></i></button>
+      <div id="productDetailContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

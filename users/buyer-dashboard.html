@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài khoản của tôi - ShopVN</title>
+    <link rel="stylesheet" href="../frontend/styles.css">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .sidebar h3 {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            color: #333;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: #ff4757;
+            color: white;
+        }
+        
+        .sidebar-menu a i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .main-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .profile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .info-group {
+            margin-bottom: 20px;
+        }
+        
+        .info-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .info-group input, .info-group select, .info-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .info-group input:focus, .info-group textarea:focus {
+            outline: none;
+            border-color: #ff4757;
+        }
+        
+        .btn-update {
+            background: #ff4757;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .btn-update:hover {
+            background: #e63946;
+            transform: translateY(-2px);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+        }
+        
+        .stat-card.orange {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .stat-card.green {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .stat-card.blue {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .stat-card h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        .orders-list {
+            margin-top: 20px;
+        }
+        
+        .order-item {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ff4757;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .order-id {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .order-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .order-status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .order-status.shipping {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .order-status.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .order-status.cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .order-products {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .order-product {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .order-product img {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        
+        .address-list {
+            margin-top: 20px;
+        }
+        
+        .address-item {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .address-item.default {
+            border: 2px solid #ff4757;
+        }
+        
+        .default-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4757;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .address-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-sm {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn-edit {
+            background: #4facfe;
+            color: white;
+        }
+        
+        .btn-delete {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .btn-add {
+            background: #43e97b;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><a href="../frontend/index.html" style="color: white; text-decoration: none;">🛍️ ShopVN</a></h1>
+            </div>
+            <nav>
+                <a href="../frontend/index.html">Trang chủ</a>
+                <a href="../frontend/cart.html">🛒 Giỏ hàng (<span id="cartCount">0</span>)</a>
+                <a href="../frontend/favorites.html">❤️ Yêu thích (<span id="favCount">0</span>)</a>
+                <a href="../frontend/orders.html">📦 Đơn hàng</a>
+            </nav>
+            <div class="user-section" id="userSection">
+                <button class="btn-logout" onclick="logout()">Đăng xuất</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>👤 Tài khoản của tôi</h3>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" onclick="showSection('profile'); return false;">📝 Thông tin cá nhân</a></li>
+                <li><a href="#" onclick="showSection('orders'); return false;">📦 Đơn hàng của tôi</a></li>
+                <li><a href="#" onclick="showSection('addresses'); return false;">📍 Địa chỉ nhận hàng</a></li>
+                <li><a href="#" onclick="showSection('favorites'); return false;">❤️ Sản phẩm yêu thích</a></li>
+                <li><a href="#" onclick="showSection('notifications'); return false;">🔔 Thông báo</a></li>
+                <li><a href="#" onclick="showSection('vouchers'); return false;">🎟️ Voucher của tôi</a></li>
+                <li><a href="#" onclick="showSection('reviews'); return false;">⭐ Đánh giá của tôi</a></li>
+                <li><a href="#" onclick="showSection('stats'); return false;">📊 Thống kê mua hàng</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Profile Section -->
+            <div id="profile-section" class="content-section">
+                <h2 class="section-title">Thông tin cá nhân</h2>
+                <div class="profile-info">
+                    <div class="info-group">
+                        <label>Họ và tên</label>
+                        <input type="text" id="fullName" placeholder="Nhập họ tên">
+                    </div>
+                    <div class="info-group">
+                        <label>Email</label>
+                        <input type="email" id="email" placeholder="email@example.com">
+                    </div>
+                    <div class="info-group">
+                        <label>Số điện thoại</label>
+                        <input type="tel" id="phone" placeholder="0xxx xxx xxx">
+                    </div>
+                    <div class="info-group">
+                        <label>Giới tính</label>
+                        <select id="gender">
+                            <option value="">Chọn giới tính</option>
+                            <option value="male">Nam</option>
+                            <option value="female">Nữ</option>
+                            <option value="other">Khác</option>
+                        </select>
+                    </div>
+                    <div class="info-group">
+                        <label>Ngày sinh</label>
+                        <input type="date" id="birthday">
+                    </div>
+                    <div class="info-group">
+                        <label>Username</label>
+                        <input type="text" id="username" disabled>
+                    </div>
+                </div>
+                <button class="btn-update" onclick="updateProfile()">💾 Cập nhật thông tin</button>
+            </div>
+
+            <!-- Orders Section -->
+            <div id="orders-section" class="content-section" style="display: none;">
+                <h2 class="section-title">Đơn hàng của tôi</h2>
+                <div class="orders-list" id="ordersList"></div>
+            </div>
+
+            <!-- Addresses Section -->
+            <div id="addresses-section" class="content-section" style="display: none;">
+                <h2 class="section-title">Địa chỉ nhận hàng</h2>
+                <button class="btn-add" onclick="addNewAddress()">➕ Thêm địa chỉ mới</button>
+                <div class="address-list" id="addressList"></div>
+            </div>
+
+            <!-- Stats Section -->
+            <div id="stats-section" class="content-section" style="display: none;">
+                <h2 class="section-title">Thống kê mua hàng</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Tổng đơn hàng</h4>
+                        <div class="number" id="totalOrders">0</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <h4>Tổng chi tiêu</h4>
+                        <div class="number" id="totalSpent">0đ</div>
+                    </div>
+                    <div class="stat-card green">
+                        <h4>Sản phẩm đã mua</h4>
+                        <div class="number" id="totalProducts">0</div>
+                    </div>
+                    <div class="stat-card blue">
+                        <h4>Điểm tích lũy</h4>
+                        <div class="number" id="loyaltyPoints">0</div>
+                    </div>
+                </div>
+                <div id="ordersChart"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../frontend/app.js"></script>
+    <script src="buyer-dashboard.js"></script>
+</body>
+</html>
